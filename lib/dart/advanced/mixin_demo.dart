@@ -1,3 +1,8 @@
+/*
+Mixins
+ANS: Mixins allow code reuse across multiple classes without traditional inheritance.
+*/
+
 mixin Walk {
   void walking() {
     print("Walking...");

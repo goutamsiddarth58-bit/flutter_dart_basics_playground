@@ -1,3 +1,8 @@
+/*
+Functions & Arguments
+ANS: Functions are reusable blocks of code that perform specific tasks.
+*/
+
 int add(int a, int b) {
   return a + b;
 }

@@ -1,5 +1,5 @@
 /*
-Ans) Variables store data.
+Ans) Variables are used to store data in memory.
 VAR: Dart automatically detects type. var uses type inference.
 dynamic: Type can change anytime.API response with unknown type
 final: 1. Runtime constant 2, Value assigned once
@@ -20,6 +20,7 @@ void variablesDemo() {
   final currentTime = DateTime.now();
   const pi = 3.14;
 
+  print("\nVariables Demo\n");
   print(age);
   print(height);
   print(name);
