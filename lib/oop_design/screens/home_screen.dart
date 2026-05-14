@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/student.dart';
 import '../repository/student_repository.dart';
-import '../widgets/student_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,44 +10,88 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final StudentRepository repository = StudentRepository();
+  final StudentRepository repository =
+  StudentRepository();
 
-  @override
-  void initState() {
-    super.initState();
+  final TextEditingController controller =
+  TextEditingController();
 
-    repository.addStudent(
+  List<Student> students = [];
+
+  bool isLoading = false;
+
+  Future<void> addStudent() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    await repository.addStudent(
       Student(
-        name: "Siddarth",
-        age: 25,
-        rollNumber: 101,
+        name: controller.text,
+        age: 20,
       ),
     );
 
-    repository.addStudent(
-      Student(
-        name: "Flutter",
-        age: 3,
-        rollNumber: 102,
-      ),
-    );
+    students = repository.students;
+
+    controller.clear();
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  Future<void> deleteStudent(int index) async {
+    await repository.deleteStudent(index);
+
+    setState(() {
+      students = repository.students;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final students = repository.getStudents();
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Student Management"),
+        title: const Text(
+          "Student Management",
+        ),
       ),
-      body: ListView.builder(
-        itemCount: students.length,
-        itemBuilder: (context, index) {
-          return StudentCard(
-            student: students[index],
-          );
-        },
+      body: Column(
+        children: [
+          TextField(
+            controller: controller,
+          ),
+
+          ElevatedButton(
+            onPressed: addStudent,
+            child: const Text("Add Student"),
+          ),
+
+          if (isLoading)
+            const CircularProgressIndicator(),
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: students.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(
+                    students[index].name,
+                  ),
+                  trailing: IconButton(
+                    onPressed: () {
+                      deleteStudent(index);
+                    },
+                    icon: const Icon(
+                      Icons.delete,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

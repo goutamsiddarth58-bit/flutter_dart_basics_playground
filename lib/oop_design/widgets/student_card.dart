@@ -16,7 +16,7 @@ class StudentCard extends StatelessWidget {
       child: ListTile(
         title: Text(student.name),
         subtitle: Text(
-          "Age: ${student.age} | Roll: ${student.rollNumber}",
+          "Age: ${student.age}",
         ),
       ),
     );

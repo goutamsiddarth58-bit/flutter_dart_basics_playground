@@ -1,13 +1,29 @@
 import '../model/student.dart';
 
 class StudentRepository {
-  final List<Student> _students = [];
+  final List<Student> students = [];
 
-  void addStudent(Student student) {
-    _students.add(student);
+  Future<void> addStudent(Student student) async {
+    await Future.delayed(
+      const Duration(milliseconds: 500),
+    );
+
+    students.add(student);
   }
 
-  List<Student> getStudents() {
-    return _students;
+  Future<void> deleteStudent(int index) async {
+    await Future.delayed(
+      const Duration(milliseconds: 500),
+    );
+
+    students.removeAt(index);
+  }
+
+  Future<List<Student>> searchStudent(String query) async {
+    await Future.delayed(
+      const Duration(milliseconds: 500),
+    );
+    return students.where((student) => student.name.toLowerCase().contains(query.toLowerCase()),
+    ).toList();
   }
 }
